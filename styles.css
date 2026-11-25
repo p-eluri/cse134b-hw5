@@ -12,6 +12,7 @@
 }
 
 /* Dark theme variables */
+
 html[data-theme="dark"] {
     --primary-color: #8fc5ff;
     --background-color: #161d29;
@@ -349,15 +350,7 @@ html[data-theme="dark"] .character-warning {
     navigation: auto;
 }
 
-/* Respect reduced-motion preferences */
-
-@media (prefers-reduced-motion: reduce) {
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
-        animation-duration: 0.01ms !important;
-    }
-}
-/* Make page transitions more visible */
+/* Normal page transition animations */
 
 ::view-transition-old(root) {
     animation-duration: 0.5s;
@@ -367,9 +360,39 @@ html[data-theme="dark"] .character-warning {
     animation-duration: 0.5s;
 }
 
+/* Respect reduced-motion preferences */
+
 @media (prefers-reduced-motion: reduce) {
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
-        animation-duration: 0.01ms !important;
+    ::view-transition-group(*),
+    ::view-transition-image-pair(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+        transition: none !important;
     }
+}
+
+/* =====================================
+   HW5 Part 3: Cat Facts Component
+   ===================================== */
+
+cat-facts {
+    --cat-background: var(--surface-color, #ffffff);
+    --cat-text: var(--text-color, #263238);
+
+    display: block;
+    background-color: var(--cat-background, #ffffff);
+    color: var(--cat-text, #263238);
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid var(--field-border-color, #666666);
+    border-radius: 6px;
+}
+
+cat-facts button {
+    background-color: var(--primary-color, #234a70);
+    color: var(--background-color, #ffffff);
+    border: 1px solid var(--field-border-color, #666666);
+    border-radius: 4px;
+    cursor: pointer;
 }

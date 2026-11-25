@@ -1,0 +1,396 @@
+
+:root {
+    --primary-color: #234a70;
+    --background-color: #f5f7fa;
+    --text-color: #263238;
+    --font-stack: Arial, Helvetica, sans-serif;
+    --content-width: 1000px;
+    --surface-color: #ffffff;
+    --field-border-color: #666666;
+    --link-color: #1769aa;
+    color-scheme: light;
+}
+
+/* Dark theme variables */
+
+html[data-theme="dark"] {
+    --primary-color: #8fc5ff;
+    --background-color: #161d29;
+    --text-color: #f1f5f9;
+    --surface-color: #253145;
+    --field-border-color: #a3b3c8;
+    --link-color: #a9d5ff;
+    color-scheme: dark;
+}
+
+/* General page styling */
+
+body {
+    font-family: var(--font-stack);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+    margin: 0;
+}
+
+main {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 1.35rem;
+}
+
+h1 {
+    font-size: 2.25rem;
+}
+
+h2 {
+    font-size: 1.65rem;
+    color: var(--primary-color);
+}
+
+h3 {
+    font-size: 1.25rem;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+/* Header and navigation */
+
+header {
+    background-color: #234a70;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+nav a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #b45309;
+    text-decoration: underline;
+}
+
+/* Student Portfolio Note */
+
+student-note {
+    display: block;
+    background-color: var(--surface-color, #ffffff);
+    color: var(--text-color, #263238);
+    border-left: 4px solid var(--primary-color, #234a70);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0 2rem;
+}
+
+student-note p {
+    margin: 0;
+}
+
+/* Buttons */
+
+button {
+    padding: 0.5em 1em;
+}
+
+/* Responsive layout */
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav a {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    header {
+        padding: 1rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+}
+
+/* External links */
+
+a[href^="https://"] {
+    color: var(--link-color);
+    text-decoration: underline;
+}
+
+/* Sections directly inside main */
+
+main > section {
+    padding: 1rem;
+    border-bottom: 1px solid #cccccc;
+}
+
+/* Paragraphs inside sections */
+
+section p {
+    margin-bottom: 1.2rem;
+}
+
+/* Keyboard focus */
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+    outline: 3px solid #b45309;
+    outline-offset: 3px;
+}
+
+/* Footer */
+
+footer {
+    background-color: #234a70;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Aside styling */
+
+aside {
+    margin: 1rem auto;
+    padding: 1rem;
+    max-width: 90%;
+    box-sizing: border-box;
+    border: 2px solid var(--primary-color);
+    background-color: var(--surface-color);
+    color: var(--text-color);
+}
+
+/* =====================================
+   Parts 1 and 2: Contact Form
+   ===================================== */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+form input,
+form textarea {
+    padding: 0.75rem;
+    font: inherit;
+    border: 1px solid var(--field-border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+form input:not([type="hidden"]),
+form textarea {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+}
+
+form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+form button {
+    align-self: flex-start;
+    background-color: #234a70;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #1769aa;
+}
+
+/* Form validation states */
+
+form input:required,
+form textarea:required {
+    border-left: 4px solid #234a70;
+}
+
+form input:user-invalid,
+form textarea:user-invalid {
+    border-color: #b42318;
+    border-left-color: #b42318;
+    background-color: #fff5f5;
+}
+
+form input:user-valid,
+form textarea:user-valid {
+    border-color: #237a42;
+    border-left-color: #237a42;
+    background-color: #f2fff5;
+}
+
+/* Dark theme validation states */
+
+html[data-theme="dark"] form input:user-invalid,
+html[data-theme="dark"] form textarea:user-invalid {
+    background-color: #47252b;
+    color: #ffffff;
+}
+
+html[data-theme="dark"] form input:user-valid,
+html[data-theme="dark"] form textarea:user-valid {
+    background-color: #183d32;
+    color: #ffffff;
+}
+
+/* =====================================
+   Part 3: JavaScript Form Enhancements
+   ===================================== */
+
+.character-warning {
+    color: #b42318;
+    font-weight: bold;
+}
+
+#form-error-area {
+    border-left: 4px solid #b42318;
+    padding: 0.5rem 1rem;
+    background-color: #fff5f5;
+}
+
+#form-error-area h2 {
+    color: #922018;
+    font-size: 1.2rem;
+}
+
+#form-error-area p {
+    color: #922018;
+}
+
+#form-info-area {
+    padding: 0.5rem 0;
+}
+
+#form-info-area h2 {
+    font-size: 1.2rem;
+}
+
+/* Dark theme error messages */
+
+html[data-theme="dark"] #form-error-area {
+    background-color: #47252b;
+}
+
+html[data-theme="dark"] #form-error-area h2,
+html[data-theme="dark"] #form-error-area p,
+html[data-theme="dark"] .character-warning {
+    color: #ffb4ab;
+}
+
+/* =====================================
+   Part 4.1: Light/Dark Theme Switching
+   ===================================== */
+
+.theme-toggle {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.65rem 1rem;
+    background-color: #234a70;
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    font: inherit;
+}
+
+.theme-toggle:hover {
+    background-color: #1769aa;
+}
+
+.theme-toggle:focus-visible {
+    outline: 3px solid #b45309;
+    outline-offset: 3px;
+}
+
+/* =====================================
+   Part 4.2: View Transitions
+   ===================================== */
+
+@view-transition {
+    navigation: auto;
+}
+
+/* Normal view transitions */
+
+::view-transition-old(root) {
+    animation-duration: 0.5s;
+}
+
+::view-transition-new(root) {
+    animation-duration: 0.5s;
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 0.01ms !important;
+    }
+}
+
+/* =====================================
+   HW5 Part 3: Cat Facts Component
+   ===================================== */
+
+cat-facts {
+    --cat-background: var(--surface-color, #ffffff);
+    --cat-text: var(--text-color, #263238);
+
+    display: block;
+    background-color: var(--cat-background, #ffffff);
+    color: var(--cat-text, #263238);
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid var(--field-border-color, #666666);
+    border-radius: 6px;
+}
+
+cat-facts button {
+    background-color: var(--primary-color, #234a70);
+    color: var(--background-color, #ffffff);
+    border: 1px solid var(--field-border-color, #666666);
+    border-radius: 4px;
+    cursor: pointer;
+}

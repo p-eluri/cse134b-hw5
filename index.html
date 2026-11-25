@@ -1,74 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Personal Portfolio</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    
+    <link rel="stylesheet" href="styles.css">
 
     <script src="theme.js" defer></script>
+    <script src="cat-facts.js" defer></script>
 </head>
+
 <body>
-<header>
-    <h1>My Personal Portfolio</h1>
-    <p>Welcome to my personal website!</p>
-</header>
-<nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About Me</a>
-    <a href="coursework.html">Coursework</a>
-    <a href="interests.html">Interests</a>
-    <a href="skills.html">Skills &amp; Goals</a>
-    <a href="contact.html">Contact</a>
-    <a href="form-no-js.html">Contact Form (No JS)</a>
-    <a href="form-with-js.html">Contact Form (JS)</a>
-    <a href="experiments.html">Experiments</a>
-</nav>
+    <header>
+        <h1>My Personal Portfolio</h1>
+        <p>Welcome to my personal website!</p>
+    </header>
 
-<main>
-<div>
-    <section>
-        <h2>About This Website</h2>
-        <p>
-            Welcome to my personal and student portfolio. 
-            Here you can get info about my background,
-            interests, and experiences at UCSD and outside of classes - especially related to <span title="Computer Science">CS</span>.
-        </p>
-    </section>
-    <section>
-        <h2>Explore My Portfolio</h2>
-        <p>
-            Visit the other pages to learn more about my
-            coursework,  skills (of different kinds), and short- and long- term goals.
-        </p>
-    </section>
-</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Me</a>
+        <a href="coursework.html">Coursework</a>
+        <a href="interests.html">Interests</a>
+        <a href="skills.html">Skills &amp; Goals</a>
+        <a href="contact.html">Contact</a>
+        <a href="form-no-js.html">Contact Form (No JS)</a>
+        <a href="form-with-js.html">Contact Form (JS)</a>
+        <a href="experiments.html">Experiments</a>
+    </nav>
 
-<student-note>
-    <p>
-        Student Portfolio Note: This website documents
-        my academic, CS-related experiences and interests at UCSD.
-    </p>
-</student-note>
+    <main>
+        <div>
+            <section>
+                <h2>About This Website</h2>
+                <p>
+                    Welcome to my personal and student portfolio.
+                    Here you can get info about my background,
+                    interests, and experiences at UCSD and outside
+                    of classes - especially related to
+                    <span title="Computer Science">CS</span>.
+                </p>
+            </section>
 
-</main>
-<footer>
-    <p>Personal Portfolio | UCSD Student</p>
-</footer>
+            <section>
+                <h2>Explore My Portfolio</h2>
+                <p>
+                    Visit the other pages to learn more about my
+                    coursework, skills (of different kinds),
+                    and short- and long-term goals.
+                </p>
+            </section>
+        </div>
 
-<hello-world></hello-world>
+        <student-note>
+            <p>
+                Student Portfolio Note: This website documents
+                my academic, CS-related experiences and interests at UCSD.
+            </p>
+        </student-note>
 
-<script>
-    class HelloWorld extends HTMLElement {
-        connectedCallback() {
-            console.log("Hello World!");
+        <section>
+            <h2>Cat Facts</h2>
+
+            <button
+                type="button"
+                id="toggle-cat-mode"
+                aria-pressed="false">
+                Hide Details
+            </button>
+
+            <cat-facts></cat-facts>
+
+            <noscript>
+                <p>Enable JavaScript to use the Cat Facts widget.</p>
+            </noscript>
+        </section>
+    </main>
+
+    <footer>
+        <p>Personal Portfolio | UCSD Student</p>
+    </footer>
+
+    <hello-world></hello-world>
+
+    <script>
+        class HelloWorld extends HTMLElement {
+            connectedCallback() {
+                console.log("Hello World!");
+            }
         }
-    }
 
-    customElements.define("hello-world", HelloWorld);
-</script>
+        customElements.define("hello-world", HelloWorld);
+    </script>
+
+    <script>
+        const catComponent = document.querySelector("cat-facts");
+        const compactButton = document.querySelector("#toggle-cat-mode");
+
+        const STORAGE_KEY = "hw5-cat-compact";
+
+        // Keep the button label and state up to date.
+        function updateCompactButton() {
+            const compact = catComponent.hasAttribute("compact");
+
+            compactButton.textContent = compact
+                ? "Show Details"
+                : "Hide Details";
+
+            compactButton.setAttribute(
+                "aria-pressed",
+                String(compact)
+            );
+        }
+
+        // Restore saved compact-mode preference.
+        try {
+            const savedMode = localStorage.getItem(STORAGE_KEY);
+
+            if (savedMode === "true") {
+                catComponent.setAttribute("compact", "");
+            } else {
+                catComponent.removeAttribute("compact");
+            }
+        } catch (error) {
+            console.warn(
+                "Could not restore compact preference.",
+                error
+            );
+
+            // Default to expanded mode if storage is unavailable.
+            catComponent.removeAttribute("compact");
+        }
+
+        // Synchronize the button with the restored state.
+        updateCompactButton();
+
+        // Handle compact-mode changes.
+        compactButton.addEventListener("click", () => {
+            catComponent.toggleAttribute("compact");
+
+            // Apply the change immediately.
+            updateCompactButton();
+
+            // Save the preference, if storage is available.
+            try {
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    String(catComponent.hasAttribute("compact"))
+                );
+            } catch (error) {
+                console.warn(
+                    "Could not save compact preference.",
+                    error
+                );
+            }
+        });
+    </script>
 </body>
 </html>
-

@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Portfolio</title>
+    <link rel="stylesheet" href="/styles.css">
+
+    <script src="/theme.js" defer></script>
+    <script src="/cat-facts.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>My Personal Portfolio</h1>
+        <p>Welcome to my personal website!</p>
+    </header>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about/">About Me</a>
+    </nav>
+
+    <main>
+        <div>
+            <section>
+                <h2>About This Website</h2>
+                <p>
+                    Welcome to my personal and student portfolio.
+                    Here you can get info about my background,
+                    interests, and experiences at UCSD and outside
+                    of classes - especially related to
+                    <span title="Computer Science">CS</span>.
+                </p>
+            </section>
+
+            <section>
+                <h2>Explore My Portfolio</h2>
+                <p>
+                    Visit the other pages to learn more about my
+                    coursework, skills (of different kinds),
+                    and short- and long-term goals.
+                </p>
+            </section>
+        </div>
+
+        <student-note>
+            <p>
+                Student Portfolio Note: This website documents
+                my academic, CS-related experiences and interests at UCSD.
+            </p>
+        </student-note>
+
+        <section>
+            <h2>Cat Facts</h2>
+
+            <button
+                type="button"
+                id="toggle-cat-mode"
+                aria-pressed="false">
+                Hide Details
+            </button>
+
+            <cat-facts></cat-facts>
+
+            <noscript>
+                <p>Enable JavaScript to use the Cat Facts widget.</p>
+            </noscript>
+        </section>
+    </main>
+
+    {% include "footer.njk" %}
+
+    <hello-world></hello-world>
+
+    <script>
+        class HelloWorld extends HTMLElement {
+            connectedCallback() {
+                console.log("Hello World!");
+            }
+        }
+
+        customElements.define("hello-world", HelloWorld);
+    </script>
+
+    <script>
+        const catComponent = document.querySelector("cat-facts");
+        const compactButton = document.querySelector("#toggle-cat-mode");
+
+        const STORAGE_KEY = "hw5-cat-compact";
+
+        function updateCompactButton() {
+            const compact = catComponent.hasAttribute("compact");
+
+            compactButton.textContent = compact
+                ? "Show Details"
+                : "Hide Details";
+
+            compactButton.setAttribute(
+                "aria-pressed",
+                String(compact)
+            );
+        }
+
+        try {
+            const savedMode = localStorage.getItem(STORAGE_KEY);
+
+            if (savedMode === "true") {
+                catComponent.setAttribute("compact", "");
+            } else {
+                catComponent.removeAttribute("compact");
+            }
+        } catch (error) {
+            console.warn(
+                "Could not restore compact preference.",
+                error
+            );
+
+            catComponent.removeAttribute("compact");
+        }
+
+        updateCompactButton();
+
+        compactButton.addEventListener("click", () => {
+            catComponent.toggleAttribute("compact");
+            updateCompactButton();
+
+            try {
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    String(catComponent.hasAttribute("compact"))
+                );
+            } catch (error) {
+                console.warn(
+                    "Could not save compact preference.",
+                    error
+                );
+            }
+        });
+    </script>
+</body>
+</html>
