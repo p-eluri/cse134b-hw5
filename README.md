@@ -7,7 +7,7 @@
 https://github.com/p-eluri/cse134b-hw5
 
 **Deployed Website:**  
-To be added after HW5 deployment.
+https://cse134b-hw5-peluri.netlify.app/
 
 **Web Component Page:**  
 index.html
